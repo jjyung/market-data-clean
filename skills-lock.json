@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "shioaji": {
+      "source": "Sinotrade/Shioaji",
+      "sourceType": "github",
+      "skillPath": "skills/shioaji/SKILL.md",
+      "computedHash": "56a09affebf383a55c98ca6397c069b783532924043a0d3375da7482e8a34b98"
+    }
+  }
+}
