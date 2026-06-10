@@ -11,6 +11,7 @@ readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
     "pytest>=9.0.3",
+    "shioaji>=1.5.2",
 ]
 
 [project.scripts]

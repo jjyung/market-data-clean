@@ -26,10 +26,14 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "pytest" },
+    { name = "shioaji" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pytest", specifier = ">=9.0.3" }]
+requires-dist = [
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "shioaji", specifier = ">=1.5.2" },
+]
 
 [[package]]
 name = "packaging"
@@ -72,4 +76,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7d/0d/549bd94f1a0a402dc8cf64563a117c0f3765662e2e668477624baeec44d5/pytest-9.0.3.tar.gz", hash = "sha256:b86ada508af81d19edeb213c681b1d48246c1a91d304c6c81a427674c17eb91c", size = 1572165, upload-time = "2026-04-07T17:16:18.027Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d4/24/a372aaf5c9b7208e7112038812994107bc65a84cd00e0354a88c2c77a617/pytest-9.0.3-py3-none-any.whl", hash = "sha256:2c5efc453d45394fdd706ade797c0a81091eccd1d6e4bccfcd476e2b8e0ab5d9", size = 375249, upload-time = "2026-04-07T17:16:16.13Z" },
+]
+
+[[package]]
+name = "shioaji"
+version = "1.5.2"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/21/09/1e90ddcbf499814d4c124cec9bfb35a11e8c82e8a3aab2c20024bfe3ea44/shioaji-1.5.2-cp314-cp314t-macosx_10_15_x86_64.whl", hash = "sha256:949683eb774de07f11c97eeec9627b6e4a799313b2b624ed131e2f41cc104043", size = 36156025, upload-time = "2026-06-04T07:12:33.858Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/a1/f8f0b5944a1e05aff4ec8cec04ff12bc3f1da7b4ce1cb5e3c7e91b098e35/shioaji-1.5.2-cp314-cp314t-macosx_11_0_arm64.whl", hash = "sha256:fc2fdd425785d620e0a4febeb496394610002963fd017b594cdc66cc6feb8ab5", size = 33381039, upload-time = "2026-06-04T07:11:54.866Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/90/c9b693de2713929db7305aded53979f47ba6c5a88f59f3e200100e30e868/shioaji-1.5.2-cp314-cp314t-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:06ab1cc321cf7a5e053f143a6fb33f268e5e0477d9fec8bc17098c6517eaf72e", size = 37812899, upload-time = "2026-06-04T07:13:01.686Z" },
+    { url = "https://files.pythonhosted.org/packages/3f/e7/0d14bd9c7394bee6146f503fa114039ff4f6938495f2bb6508a239b43661/shioaji-1.5.2-cp314-cp314t-manylinux_2_28_aarch64.whl", hash = "sha256:7dd48706461d4f52a69d600149b074fd99de7100b7e551c17062a379d5c39e27", size = 35438454, upload-time = "2026-06-04T07:11:06.505Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/15/b474626d0638f7b842a8f34d3a00b5005a8815402130ec703b460fff62f9/shioaji-1.5.2-cp37-abi3-macosx_10_15_x86_64.whl", hash = "sha256:86d102d2ca20617820e3945723027b4cb68cfe27efe8daf2b57835e9e1e6e396", size = 36170176, upload-time = "2026-06-04T07:11:21.882Z" },
+    { url = "https://files.pythonhosted.org/packages/6b/b1/10f4cdc09cfb7710f2df9d0649f28c3769f3dcb101b7f2bf0e4b243d919c/shioaji-1.5.2-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:61ffe62c42df9949182bc1f55a892c2831f9763f7da56cb6c989a4f8dcf804a0", size = 33395506, upload-time = "2026-06-04T07:12:09.099Z" },
+    { url = "https://files.pythonhosted.org/packages/55/82/631c7ecde4453bbcdd7656970e98403529de1367f663f00f8dfd91b9447a/shioaji-1.5.2-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3710997deafbf3df02413c0bcb80b8d9d5e538ace3d619cb59f7544684db082c", size = 37812115, upload-time = "2026-06-04T07:11:37.154Z" },
+    { url = "https://files.pythonhosted.org/packages/de/4a/70613ffde7b640cb7ca66d97fdb6a3ca5137aa9069a70d59afca52a846ef/shioaji-1.5.2-cp37-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:e0aa47edc8ef686d44f1a43ad1e42482ad3f291de2ccb07818cca62ad7134b1a", size = 35429297, upload-time = "2026-06-04T07:12:45.914Z" },
+    { url = "https://files.pythonhosted.org/packages/1c/ae/ba939078ae0535a0a06e0feb6252274df276c2032d6ac5f4adb78fd99f7a/shioaji-1.5.2-cp37-abi3-win_amd64.whl", hash = "sha256:5c0c1fb26133c25d0772447cf66242a0dc94ccb7df22108e79a81662dc6f3205", size = 39763726, upload-time = "2026-06-04T07:12:21.826Z" },
 ]

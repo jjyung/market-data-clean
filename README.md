@@ -6,6 +6,10 @@ A small data-cleaning layer for market data used by research and backtesting.
 
 Turn raw market data into a normalized, validated, audit-friendly dataset that downstream research code can trust.
 
+> ⚠️ **Current focus: 加權指數期貨（台指期 TX / 小台 MTX）**  
+> 商品如 `TXFR1`（近月）、`TXFR2`（遠月）、`TXFF6`（實際交割代碼）等。  
+> 本階段暫不處理個股期貨、選擇權、股票等其他商品。
+
 ## Scope
 
 - ingest raw files
