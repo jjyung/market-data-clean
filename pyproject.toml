@@ -9,6 +9,9 @@ description = "Market data cleaning and validation pipeline"
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
+dependencies = [
+    "pytest>=9.0.3",
+]
 
 [project.scripts]
 market-data-clean = "market_data_clean.cli:main"
