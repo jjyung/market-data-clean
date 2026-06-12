@@ -1,0 +1,42 @@
+version: "1.0"
+metadata:
+  project: "market-data-clean"
+ownership:
+  defaults:
+    data_steward: "data-team@example.com"
+    data_owner: "Quant Research"
+    criticality: "medium"
+    classification: "internal"
+    data_domain: "futures"
+    description: "Default owner"
+  overrides:
+    - symbol: "TX"
+      source: "finmind"
+      data_steward: "data@example.com"
+retention:
+  policies:
+    - category: "raw_input"
+      retention_days: 30
+      archive_after_days: 60
+      deletion_after_days: 365
+    - category: "cleaned"
+      retention_days: 365
+      archive_after_days: null
+      deletion_after_days: null
+    - category: "rejected"
+      retention_days: 90
+      archive_after_days: 180
+      deletion_after_days: 365
+    - category: "report"
+      retention_days: 730
+      archive_after_days: null
+      deletion_after_days: null
+    - category: "manifest"
+      retention_days: 730
+      archive_after_days: null
+      deletion_after_days: null
+quality:
+  outlier_z_score: 3.0
+  max_rejection_rate: 0.25
+  outlier_fields: []
+adapters: {}

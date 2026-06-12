@@ -1,0 +1,82 @@
+# ==============================================================
+# Data Governance Configuration — market-data-clean
+# ==============================================================
+version: "1.0"
+
+metadata:
+  project: "market-data-clean"
+  environment: "development"
+  created_at: "2026-06-12T00:00:00Z"
+  updated_at: "2026-06-12T00:00:00Z"
+
+ownership:
+  defaults:
+    data_steward: "data-team@example.com"
+    data_owner: "Quant Research"
+    criticality: "medium"
+    classification: "internal"
+    data_domain: "futures"
+    description: "Default ownership for market data feeds"
+  overrides:
+    - symbol: "TXFR1"
+      source: "sinopac"
+      data_steward: "trading-desk@example.com"
+      data_owner: "Execution Team"
+      criticality: "high"
+      classification: "internal"
+      data_domain: "futures"
+      description: "TX front-month real-time tick — trading-critical"
+    - symbol: "TX"
+      source: "finmind"
+      data_steward: "data-engineering@example.com"
+      data_owner: "Data Platform"
+      criticality: "medium"
+      classification: "internal"
+      data_domain: "futures"
+      description: "TX daily OHLCV from FinMind — research use"
+    - symbol: "MTX"
+      source: "finmind"
+      data_steward: "data-engineering@example.com"
+      data_owner: "Data Platform"
+      criticality: "medium"
+      classification: "internal"
+      data_domain: "futures"
+      description: "MTX daily OHLCV from FinMind — research use"
+
+quality:
+  outlier_z_score: 3.0
+  max_rejection_rate: 0.10
+  outlier_fields:
+    - "volume"
+    - "close"
+
+retention:
+  policies:
+    - category: "raw_input"
+      retention_days: 30
+      archive_after_days: 90
+      deletion_after_days: 365
+    - category: "cleaned"
+      retention_days: 365
+      archive_after_days: null
+      deletion_after_days: null
+    - category: "rejected"
+      retention_days: 90
+      archive_after_days: 180
+      deletion_after_days: 365
+    - category: "report"
+      retention_days: 730
+      archive_after_days: null
+      deletion_after_days: null
+    - category: "manifest"
+      retention_days: 730
+      archive_after_days: null
+      deletion_after_days: null
+
+adapters:
+  sinopac:
+    expected_version: "shioaji-1.5.2"
+    source_label: "sinopac"
+  finmind:
+    expected_version: "finmind-api-v4"
+    source_label: "finmind"

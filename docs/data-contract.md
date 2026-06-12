@@ -17,6 +17,12 @@ Optional fields:
 - `adj_close`: float
 - `source`: string
 - `ingested_at`: timezone-aware datetime in UTC
+- `governance.run_id`: string UUID linking a row to the pipeline run that produced it
+- `source_version`: string identifying the source adapter/version (for example `sinopac:shioaji-1.5.2`)
+- `adapter_trace`: stringified JSON provenance payload with source-record keys
+- `quality_score`: float from `0.0` to `1.0` for lightweight row-level quality scoring
+
+Governance fields are output-only and optional. Raw input adapters do not need to provide them.
 
 ## Rules
 - All cleaned timestamps must be UTC.

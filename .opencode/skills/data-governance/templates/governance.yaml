@@ -1,0 +1,61 @@
+# Lightweight Data Governance Configuration
+version: "1.0"
+
+metadata:
+  project: "{{project_name}}"
+  environment: "development"
+  created_at: "{{created_at_iso}}"
+  updated_at: "{{updated_at_iso}}"
+
+ownership:
+  defaults:
+    data_steward: "{{default_steward}}"
+    data_owner: "{{default_owner}}"
+    criticality: "medium"
+    classification: "internal"
+    data_domain: "{{default_data_domain}}"
+    description: "Default ownership for project data assets"
+  overrides:
+    - symbol: "{{entity_or_dataset_1}}"
+      source: "{{source_1}}"
+      data_steward: "{{steward_1}}"
+      data_owner: "{{owner_1}}"
+      criticality: "high"
+      classification: "internal"
+      data_domain: "{{domain_1}}"
+      description: "{{description_1}}"
+
+quality:
+  outlier_z_score: 3.0
+  max_rejection_rate: 0.10
+  outlier_fields:
+    - "{{numeric_field_1}}"
+    - "{{numeric_field_2}}"
+
+retention:
+  policies:
+    - category: "raw_input"
+      retention_days: 30
+      archive_after_days: 90
+      deletion_after_days: 365
+    - category: "cleaned"
+      retention_days: 365
+      archive_after_days: null
+      deletion_after_days: null
+    - category: "rejected"
+      retention_days: 90
+      archive_after_days: 180
+      deletion_after_days: 365
+    - category: "report"
+      retention_days: 730
+      archive_after_days: null
+      deletion_after_days: null
+    - category: "manifest"
+      retention_days: 730
+      archive_after_days: null
+      deletion_after_days: null
+
+adapters:
+  {{source_1}}:
+    expected_version: "{{source_1_version}}"
+    source_label: "{{source_1}}"
