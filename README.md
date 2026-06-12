@@ -1,36 +1,84 @@
 # market-data-clean
 
-A small data-cleaning layer for market data used by research and backtesting.
+A **data-governance-first** cleaning layer for **Taiwan financial market data**, purpose-built for downstream research and backtesting.
 
 ## Goal
 
-Turn raw market data into a normalized, validated, audit-friendly dataset that downstream research code can trust.
+Produce a **normalized, validated, auditable, and governance-rich** dataset from raw market data — combining data quality management, lineage tracking, ownership metadata, and retention policies — so that downstream research and backtesting pipelines can trust every row.
 
-> ⚠️ **Current focus: 加權指數期貨（台指期 TX / 小台 MTX）**  
-> 商品如 `TXFR1`（近月）、`TXFR2`（遠月）、`TXFF6`（實際交割代碼）等。  
-> 本階段暫不處理個股期貨、選擇權、股票等其他商品。
+This project practices **pragmatic data governance** aligned with the [DAMA DMBoK](https://www.dama.org/cp/display-the-dama-guide-to-the-data-management-body-of-knowledge-dmbok) framework, including ownership & stewardship (DMBoK-7), metadata management & lineage (DMBoK-9), data quality management (DMBoK-10), and data lifecycle / retention (DMBoK-3).
+
+> ⚠️ **Short-term scope: 台灣期貨（TAIFEX Futures）**  
+> 目前僅支援**台股期貨** — 加權指數期貨（**TX** / 大台）、小型臺指期貨（**MTX** / 小台）。  
+> 商品代碼如 `TXFR1`（近月）、`TXFR2`（遠月）、`TXFF6`（實際交割代碼）等。  
+> 資料來源：Sinopac（永豐金 Shioaji，即時報價）與 FinMind（歷史日/分K/快照）。
+>
+> **Roadmap：後續不排除擴充至個股、加密貨幣、或其他海外市場（如美股）。**
 
 ## Scope
 
-- ingest raw files
-- normalize schema and timestamps
-- validate rows
-- split accepted / rejected records
-- emit a cleaning report
+- **Ingest** raw files from Taiwan market data sources
+- **Normalize** schema and timestamps into a canonical format
+- **Validate** rows against defined business rules
+- **Govern** every row with lineage, quality scores, and source provenance
+- **Split** accepted / rejected records with rejection reasons
+- **Report** a cleaning report enriched with governance metadata (ownership map, retention advisory, quality summary)
+
+## Data Governance Practices
+
+| Practice                          | DMBoK Area | How This Repo Implements It                                                                                                      |
+| --------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Ownership & Stewardship**       | DMBoK-7    | `governance.yaml` defines data stewards, owners, criticality per symbol/source                                                   |
+| **Data Quality Management**       | DMBoK-10   | Validator checks business rules; `quality.json` captures per-rule histograms, null counts, outlier flags                         |
+| **Metadata Management & Lineage** | DMBoK-9    | Every run produces a manifest (`run_id`, git hash, adapter versions); every row carries `governance.run_id` and `source_version` |
+| **Data Lifecycle & Retention**    | DMBoK-3    | Configurable retention policies per output category with advisory scans                                                          |
+| **Audit Trail**                   | DMBoK-9    | Append-only `audit_log.jsonl` records every cleaning run                                                                         |
+| **Reference Data Management**     | DMBoK-7    | Symbol-source registry in governance config with data domain classification                                                      |
 
 ## MVP
 
 1. Define the data contract
 2. Implement validation rules
-3. Add a simple CLI
-4. Write a sample cleaning pipeline
+3. Add governance engine (config, manifest, quality snapshot, audit log)
+4. Add a simple CLI with governance subcommands
+5. Write a sample cleaning pipeline
 
-## Repo layout
+## Quick Start
 
-- `docs/` — contracts and assumptions
-- `src/` — package code
-- `tests/` — unit tests
+```bash
+# Install
+pip install market-data-clean
+
+# Run with governance (default config auto-detected)
+market-data-clean --input data/raw/input.csv --output data/cleaned/
+
+# Initialize a governance config template
+market-data-clean governance init-config
+
+# Check retention compliance
+market-data-clean governance retention-check --config governance.yaml --data-dir data/
+```
+
+## Repo Layout
+
+```
+.
+├── docs/               # Contracts, specs, governance documentation
+│   ├── specs/          # Feature specifications
+│   └── data-contract.md
+├── src/                # Package code
+│   └── market_data_clean/
+│       ├── governance.py        # Governance engine
+│       ├── governance_schema.py # Pydantic models
+│       ├── validator.py         # Validation rules
+│       └── cli.py               # CLI entrypoint
+├── tests/              # Unit & integration tests
+├── governance.yaml     # (default) Governance configuration
+└── pyproject.toml
+```
 
 ## Status
 
-This repo is intentionally small at first. The contract comes before feature growth.
+This repo is intentionally small at first. **The contract comes before feature growth.**  
+Currently focused on Taiwan index futures (TX / MTX) with a DMBoK-aligned governance foundation.  
+Future expansions to stocks, crypto, or international markets remain open.

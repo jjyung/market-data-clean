@@ -31,6 +31,9 @@ node_modules/
 # --- Logs ---
 *.log
 
+# --- Agent handoffs ---
+.handoffs/
+
 # --- Build artifacts ---
 *.whl
 *.tar.gz
