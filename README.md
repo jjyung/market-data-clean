@@ -77,6 +77,48 @@ market-data-clean governance retention-check --config governance.yaml --data-dir
 └── pyproject.toml
 ```
 
+## Architecture & Data Flow
+
+```mermaid
+flowchart LR
+    subgraph Online["盤中 (Online)"]
+        S[Shioaji<br/>callback] -->|JSONL append<br/>格式不改| RAW_S[(raw_shioaji/)]
+    end
+
+    subgraph Offline["收盤後 (Offline Batch)"]
+        RAW_S --> MDC
+        F[FinMind API] -->|JSONL 寫入| RAW_F[(raw_finmind/)]
+        RAW_F --> MDC
+
+        subgraph MDC[market-data-clean]
+            direction LR
+            ADAPTER_S[adapter: shioaji]
+            ADAPTER_F[adapter: finmind]
+            UNIFIED[unified raw input]
+            PARSER[parser]
+            VALIDATOR[validator]
+            GOV[governance engine]
+
+            ADAPTER_S --> UNIFIED
+            ADAPTER_F --> UNIFIED
+            UNIFIED --> PARSER
+            PARSER --> VALIDATOR
+            VALIDATOR --> GOV
+        end
+
+        GOV --> CLEANED[(cleaned/)]
+        GOV --> REJECTED[(rejected/)]
+        GOV --> REPORT[(report + governance artifacts)]
+    end
+
+    style Online fill:#f0f8ff,stroke:#4682b4
+    style Offline fill:#fff8f0,stroke:#d2691e
+```
+
+> **設計原則：** 盤中 callback 只做輕量落地（不轉格式、不阻斷），所有轉換、驗證、治理都在收盤後的 batch 完成。  
+> **落地格式統一使用 JSON Lines（`.jsonl`）**，每筆資料一行，Shioaji callback 來就 append，FinMind fetch 後也寫成同樣格式。  
+> 同一套 adapter + validator + governance engine 處理所有來源。
+
 ## Status
 
 This repo is intentionally small at first. **The contract comes before feature growth.**  
